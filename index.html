@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduShkodër – Tutor 1 me 1</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --orange: #FF6B35;
+      --orange-dark: #e85820;
+      --orange-light: #ff8c5a;
+      --yellow: #FFD166;
+      --yellow-light: #ffe499;
+      --white: #FFFFFF;
+      --dark: #2D2D2D;
+      --gray: #6b7280;
+      --gray-light: #f8f7f5;
+      --gray-mid: #e8e6e1;
+      --shadow-sm: 0 2px 8px rgba(255,107,53,0.10);
+      --shadow-md: 0 6px 24px rgba(255,107,53,0.13);
+      --shadow-lg: 0 16px 48px rgba(255,107,53,0.16);
+      --radius: 14px;
+      --radius-lg: 22px;
+      --transition: all 0.28s cubic-bezier(.4,0,.2,1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; color: var(--dark); background: var(--white); overflow-x: hidden; line-height: 1.7; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    button, input, select, textarea { font-family: inherit; }
+    h1,h2,h3,h4 { font-family: 'Poppins', sans-serif; line-height: 1.22; }
+    h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 900; }
+    h2 { font-size: clamp(1.7rem, 3.5vw, 2.5rem); font-weight: 800; }
+    h3 { font-size: 1.2rem; font-weight: 700; }
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+    .section-tag { display: inline-block; background: var(--yellow-light); color: var(--orange-dark); font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 16px; border-radius: 100px; margin-bottom: 14px; }
+    .section-title { margin-bottom: 10px; }
+    .section-subtitle { color: var(--gray); font-size: 1.05rem; max-width: 560px; }
+    .center-text { text-align: center; }
+    .center-text .section-subtitle { margin: 0 auto; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 13px 28px; border-radius: var(--radius); font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.95rem; border: none; cursor: pointer; transition: var(--transition); }
+    .btn-primary { background: var(--orange); color: var(--white); box-shadow: 0 4px 18px rgba(255,107,53,0.35); }
+    .btn-primary:hover { background: var(--orange-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,107,53,0.42); }
+
+    /* NAVBAR */
+    #navbar { position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); border-bottom: 1.5px solid var(--gray-mid); transition: box-shadow 0.3s; }
+    #navbar.scrolled { box-shadow: 0 4px 24px rgba(45,45,45,0.10); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+    .nav-logo { font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 1.55rem; color: var(--dark); }
+    .nav-logo span { color: var(--orange); }
+    .nav-links { display: flex; align-items: center; gap: 6px; }
+    .nav-links a { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.9rem; color: var(--gray); padding: 8px 14px; border-radius: 10px; transition: var(--transition); }
+    .nav-links a:hover, .nav-links a.active { color: var(--orange); background: rgba(255,107,53,0.08); }
+    .nav-hamburger { display: none; background: none; border: none; cursor: pointer; font-size: 1.4rem; color: var(--dark); padding: 6px; }
+    .mobile-menu { display: none; flex-direction: column; gap: 2px; padding-bottom: 16px; }
+    .mobile-menu a { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1rem; color: var(--gray); padding: 12px 16px; border-radius: 10px; transition: var(--transition); }
+    .mobile-menu a:hover { color: var(--orange); background: rgba(255,107,53,0.08); }
+    .mobile-menu.open { display: flex; }
+
+    /* HERO */
+    #hero { min-height: 92vh; background: linear-gradient(135deg, #FF6B35 0%, #ff8c5a 35%, #FFD166 75%, #ffe8a0 100%); display: flex; align-items: center; position: relative; overflow: hidden; padding: 80px 0 60px; }
+    .hero-blobs { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .hero-blob { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.12); }
+    .hero-blob-1 { width: 420px; height: 420px; top: -120px; right: -80px; }
+    .hero-blob-2 { width: 260px; height: 260px; bottom: -80px; left: 8%; }
+    .hero-blob-3 { width: 160px; height: 160px; top: 30%; left: 40%; background: rgba(255,255,255,0.07); }
+    .hero-dots { position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(circle, rgba(255,255,255,0.22) 1.5px, transparent 1.5px); background-size: 38px 38px; }
+    .hero-content { position: relative; z-index: 2; max-width: 640px; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.25); backdrop-filter: blur(8px); border: 1.5px solid rgba(255,255,255,0.45); border-radius: 100px; padding: 7px 18px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.82rem; color: var(--white); margin-bottom: 26px; }
+    #hero h1 { color: var(--white); margin-bottom: 18px; text-shadow: 0 2px 12px rgba(45,45,45,0.12); }
+    .hero-sub { color: rgba(255,255,255,0.92); font-size: 1.15rem; max-width: 520px; margin-bottom: 36px; font-weight: 500; }
+    .hero-btns { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 48px; }
+    .btn-white { background: var(--white); color: var(--orange); font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.95rem; padding: 13px 28px; border-radius: var(--radius); border: none; cursor: pointer; box-shadow: 0 4px 18px rgba(45,45,45,0.14); transition: var(--transition); display: inline-flex; align-items: center; gap: 8px; }
+    .btn-white:hover { background: var(--yellow); transform: translateY(-2px); }
+    .btn-outline-white { background: transparent; color: var(--white); border: 2px solid rgba(255,255,255,0.7); font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.95rem; padding: 13px 28px; border-radius: var(--radius); cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 8px; }
+    .btn-outline-white:hover { background: var(--white); color: var(--orange); }
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 28px; }
+    .hero-stat { text-align: center; }
+    .hero-stat-num { font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 2rem; color: var(--white); line-height: 1; }
+    .hero-stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.82); font-weight: 600; }
+    .hero-stat-divider { width: 1.5px; height: 40px; background: rgba(255,255,255,0.3); align-self: center; }
+    .hero-visual { position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 40%; max-width: 420px; padding-right: 32px; display: flex; align-items: center; justify-content: center; }
+    .hero-card-float { background: rgba(255,255,255,0.97); border-radius: var(--radius-lg); padding: 30px 26px; box-shadow: 0 24px 64px rgba(45,45,45,0.18); width: 100%; animation: floatUp 3.5s ease-in-out infinite alternate; }
+    @keyframes floatUp { from { transform: translateY(0px); } to { transform: translateY(-14px); } }
+    .hc-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    .hc-icon { width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, var(--orange), var(--yellow)); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: var(--white); flex-shrink: 0; }
+    .hc-title { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--dark); }
+    .hc-sub { font-size: 0.75rem; color: var(--gray); font-weight: 500; }
+    .hc-courses { display: flex; flex-direction: column; gap: 9px; }
+    .hc-course { display: flex; align-items: center; gap: 10px; padding: 10px 13px; border-radius: 10px; background: var(--gray-light); font-size: 0.83rem; font-weight: 600; color: var(--dark); }
+    .hc-course i { color: var(--orange); font-size: 0.85rem; }
+    .hc-badge { margin-left: auto; background: var(--yellow-light); color: var(--orange-dark); font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 100px; }
+
+    /* COURSES */
+    #courses { padding: 96px 0; background: var(--gray-light); }
+    .courses-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 52px; }
+    .course-card { background: var(--white); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); transition: var(--transition); display: flex; flex-direction: column; }
+    .course-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .course-card-top { padding: 28px 26px 20px; background: linear-gradient(135deg, rgba(255,107,53,0.07) 0%, rgba(255,209,102,0.13) 100%); position: relative; }
+    .course-icon-wrap { width: 58px; height: 58px; border-radius: 15px; background: linear-gradient(135deg, var(--orange), var(--orange-light)); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: var(--white); margin-bottom: 16px; box-shadow: 0 6px 18px rgba(255,107,53,0.28); }
+    .course-category-label { position: absolute; top: 20px; right: 20px; background: var(--yellow); color: var(--dark); font-size: 0.68rem; font-weight: 700; padding: 4px 10px; border-radius: 100px; font-family: 'Poppins', sans-serif; }
+    .course-card-top h3 { font-size: 1.05rem; color: var(--dark); margin-bottom: 4px; }
+    .course-card-body { padding: 20px 26px; flex: 1; display: flex; flex-direction: column; }
+    .course-desc { font-size: 0.87rem; color: var(--gray); margin-bottom: 16px; flex: 1; }
+    .course-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .course-meta-item { display: flex; align-items: center; gap: 5px; font-size: 0.75rem; font-weight: 600; color: var(--gray); background: var(--gray-light); padding: 4px 10px; border-radius: 8px; }
+    .course-meta-item i { color: var(--orange); font-size: 0.72rem; }
+    .btn-course { width: 100%; background: transparent; color: var(--orange); border: 2px solid var(--orange); border-radius: var(--radius); padding: 11px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 7px; }
+    .btn-course:hover { background: var(--orange); color: var(--white); box-shadow: 0 6px 18px rgba(255,107,53,0.3); }
+
+    /* TEACHERS */
+    #teachers { padding: 96px 0; background: var(--white); }
+    .teachers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 52px; }
+    .teacher-card { background: var(--white); border: 2px solid var(--gray-mid); border-radius: var(--radius-lg); padding: 32px 28px; transition: var(--transition); text-align: center; position: relative; overflow: hidden; }
+    .teacher-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--orange), var(--yellow)); transform: scaleX(0); transform-origin: left; transition: transform 0.35s ease; }
+    .teacher-card:hover { border-color: var(--orange); box-shadow: var(--shadow-lg); transform: translateY(-5px); }
+    .teacher-card:hover::before { transform: scaleX(1); }
+    .teacher-avatar { width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), var(--yellow)); display: flex; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 1.8rem; color: var(--white); margin: 0 auto 16px; box-shadow: 0 8px 24px rgba(255,107,53,0.3); }
+    .teacher-name { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 1.1rem; margin-bottom: 6px; }
+    .teacher-subject { display: inline-block; background: var(--yellow-light); color: var(--orange-dark); font-size: 0.75rem; font-weight: 700; padding: 3px 12px; border-radius: 100px; margin-bottom: 16px; font-family: 'Poppins', sans-serif; }
+    .teacher-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
+    .teacher-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 10px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.78rem; border: none; cursor: pointer; transition: var(--transition); text-decoration: none; }
+    .teacher-btn-wa { background: #25D366; color: white; }
+    .teacher-btn-wa:hover { background: #1da851; transform: translateY(-1px); }
+    .teacher-btn-map { background: var(--gray-light); color: var(--dark); border: 1.5px solid var(--gray-mid); }
+    .teacher-btn-map:hover { border-color: var(--orange); color: var(--orange); background: rgba(255,107,53,0.06); }
+    .teacher-phone { font-size: 0.82rem; color: var(--gray); margin-bottom: 4px; }
+
+    /* HOW IT WORKS */
+    #how { padding: 96px 0; background: var(--gray-light); }
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 52px; position: relative; }
+    .steps-grid::before { content: ''; position: absolute; top: 52px; left: calc(16.66% + 16px); right: calc(16.66% + 16px); height: 2px; background: linear-gradient(90deg, var(--orange), var(--yellow)); z-index: 0; }
+    .step-card { text-align: center; padding: 38px 26px; border-radius: var(--radius-lg); background: var(--white); border: 2px solid var(--gray-mid); transition: var(--transition); position: relative; z-index: 1; }
+    .step-card:hover { border-color: var(--orange); box-shadow: var(--shadow-md); transform: translateY(-4px); }
+    .step-num { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), var(--yellow)); display: flex; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 1.1rem; color: var(--white); margin: 0 auto 20px; box-shadow: 0 6px 18px rgba(255,107,53,0.3); }
+    .step-icon { font-size: 2.2rem; color: var(--orange); margin-bottom: 18px; }
+    .step-card h3 { margin-bottom: 10px; }
+    .step-card p { font-size: 0.9rem; color: var(--gray); }
+
+    /* BOOKING */
+    #booking { padding: 96px 0; background: var(--white); }
+    .booking-form-card { background: var(--white); border-radius: var(--radius-lg); padding: 40px; box-shadow: var(--shadow-md); border: 2px solid var(--gray-mid); max-width: 760px; margin: 0 auto; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-grid .full { grid-column: 1 / -1; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-group label { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.82rem; color: var(--dark); }
+    .form-group input, .form-group select { padding: 11px 14px; border: 1.8px solid var(--gray-mid); border-radius: 10px; font-size: 0.9rem; color: var(--dark); background: var(--white); transition: var(--transition); outline: none; }
+    .form-group input:focus, .form-group select:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(255,107,53,0.1); }
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    .checkbox-label { display: flex; align-items: center; gap: 7px; background: var(--gray-light); border: 1.5px solid var(--gray-mid); border-radius: 8px; padding: 7px 13px; font-size: 0.83rem; font-weight: 600; cursor: pointer; transition: var(--transition); user-select: none; }
+    .checkbox-label input { accent-color: var(--orange); }
+    .checkbox-label.checked { border-color: var(--orange); background: rgba(255,107,53,0.08); color: var(--orange-dark); }
+
+    /* Teacher picker */
+    .teacher-picker { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 8px; }
+    .teacher-pick-card { border: 2px solid var(--gray-mid); border-radius: var(--radius); padding: 16px 12px; cursor: pointer; transition: var(--transition); text-align: center; position: relative; background: var(--white); }
+    .teacher-pick-card:hover { border-color: var(--orange-light); background: rgba(255,107,53,0.03); }
+    .teacher-pick-card.selected { border-color: var(--orange); background: rgba(255,107,53,0.07); box-shadow: 0 0 0 3px rgba(255,107,53,0.12); }
+    .teacher-pick-card.disabled { opacity: 0.35; cursor: not-allowed; pointer-events: none; }
+    .tp-avatar { width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), var(--yellow)); display: flex; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 1.1rem; color: var(--white); margin: 0 auto 10px; }
+    .tp-name { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.82rem; color: var(--dark); margin-bottom: 4px; }
+    .tp-subj { font-size: 0.7rem; color: var(--gray); font-weight: 600; }
+    .tp-check { position: absolute; top: 8px; right: 8px; width: 20px; height: 20px; border-radius: 50%; background: var(--orange); display: none; align-items: center; justify-content: center; color: white; font-size: 0.65rem; }
+    .teacher-pick-card.selected .tp-check { display: flex; }
+
+    .btn-submit-wa { width: 100%; background: #25D366; color: var(--white); border: none; border-radius: var(--radius); padding: 15px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.02rem; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 10px; box-shadow: 0 6px 20px rgba(37,211,102,0.32); margin-top: 8px; }
+    .btn-submit-wa:hover { background: #1da851; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(37,211,102,0.4); }
+    .btn-submit-wa:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .form-note { font-size: 0.78rem; color: var(--gray); text-align: center; margin-top: 10px; }
+
+    /* TESTIMONIALS */
+    #testimonials { padding: 96px 0; background: var(--white); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 52px; }
+    .testi-card { background: var(--white); border: 2px solid var(--gray-mid); border-radius: var(--radius-lg); padding: 32px 28px; transition: var(--transition); }
+    .testi-card:hover { border-color: var(--yellow); box-shadow: var(--shadow-md); transform: translateY(-4px); }
+    .testi-quote { font-size: 2.8rem; color: var(--yellow); font-family: 'Poppins', sans-serif; font-weight: 900; line-height: 0.8; margin-bottom: 16px; }
+    .testi-text { font-size: 0.91rem; color: var(--gray); font-style: italic; margin-bottom: 22px; line-height: 1.7; }
+    .stars { display: flex; gap: 3px; margin-bottom: 18px; }
+    .stars i { color: var(--yellow); font-size: 0.92rem; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--orange), var(--yellow)); display: flex; align-items: center; justify-content: center; font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 1.05rem; color: var(--white); flex-shrink: 0; }
+    .testi-name { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.93rem; }
+    .testi-role { font-size: 0.77rem; color: var(--gray); }
+
+    /* CONTACT */
+    #contact { padding: 96px 0; background: var(--gray-light); }
+    .contact-form-card { background: var(--white); border-radius: var(--radius-lg); padding: 36px; box-shadow: var(--shadow-md); max-width: 600px; margin: 48px auto 0; }
+    .contact-form-card h3 { margin-bottom: 24px; }
+    .contact-form-grid { display: flex; flex-direction: column; gap: 16px; }
+    .form-group textarea { padding: 11px 14px; border: 1.8px solid var(--gray-mid); border-radius: 10px; font-size: 0.9rem; color: var(--dark); background: var(--white); transition: var(--transition); outline: none; resize: vertical; min-height: 110px; }
+    .form-group textarea:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(255,107,53,0.1); }
+    .success-msg { display: none; background: linear-gradient(135deg, #d1fae5, #a7f3d0); border: 1.5px solid #34d399; border-radius: var(--radius); padding: 20px 24px; text-align: center; color: #065f46; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.95rem; margin-top: 16px; }
+    .success-msg i { font-size: 1.8rem; margin-bottom: 8px; color: #059669; display: block; }
+    .btn-submit { width: 100%; background: linear-gradient(135deg, var(--orange), var(--orange-light)); color: var(--white); border: none; border-radius: var(--radius); padding: 14px; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1rem; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; gap: 9px; box-shadow: 0 6px 20px rgba(255,107,53,0.32); margin-top: 8px; }
+    .btn-submit:hover { background: linear-gradient(135deg, var(--orange-dark), var(--orange)); transform: translateY(-2px); }
+
+    /* FOOTER */
+    #footer { background: var(--dark); color: var(--white); padding: 64px 0 28px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; padding-bottom: 48px; border-bottom: 1.5px solid rgba(255,255,255,0.1); }
+    .footer-logo { font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 1.55rem; margin-bottom: 16px; }
+    .footer-logo span { color: var(--orange); }
+    .footer-desc { font-size: 0.87rem; color: rgba(255,255,255,0.5); max-width: 280px; line-height: 1.7; }
+    .footer-socials { display: flex; gap: 10px; margin-top: 22px; }
+    .footer-social { width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 1.05rem; color: rgba(255,255,255,0.6); transition: var(--transition); }
+    .footer-social:hover { background: var(--orange); color: var(--white); transform: translateY(-2px); }
+    .footer-col h4 { font-family: 'Poppins', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 18px; }
+    .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { font-size: 0.85rem; color: rgba(255,255,255,0.46); transition: var(--transition); }
+    .footer-col ul li a:hover { color: var(--orange); padding-left: 4px; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding-top: 24px; }
+    .footer-copy { font-size: 0.82rem; color: rgba(255,255,255,0.32); }
+    .footer-copy span { color: var(--orange); }
+
+    /* WHATSAPP */
+    .whatsapp-float { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 58px; height: 58px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; font-size: 1.7rem; color: var(--white); box-shadow: 0 6px 24px rgba(37,211,102,0.45); transition: var(--transition); cursor: pointer; }
+    .whatsapp-float:hover { transform: scale(1.1) translateY(-3px); }
+    .whatsapp-tooltip { position: fixed; bottom: 42px; right: 96px; z-index: 998; background: var(--dark); color: var(--white); font-family: 'Poppins', sans-serif; font-size: 0.77rem; font-weight: 600; padding: 7px 14px; border-radius: 8px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.22s; }
+    .whatsapp-float:hover + .whatsapp-tooltip { opacity: 1; }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.22s; }
+    .reveal-delay-3 { transition-delay: 0.34s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .hero-visual { display: none; }
+      .courses-grid { grid-template-columns: repeat(2, 1fr); }
+      .teachers-grid { grid-template-columns: repeat(2, 1fr); }
+      .teacher-picker { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .nav-links, .nav-cta-desktop { display: none; }
+      .nav-hamburger { display: block; }
+      .courses-grid { grid-template-columns: 1fr; }
+      .teachers-grid { grid-template-columns: 1fr; }
+      .teacher-picker { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid { grid-template-columns: 1fr; }
+      .steps-grid::before { display: none; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 18px; }
+      .hero-stat-divider { display: none; }
+      #hero { padding: 60px 0 48px; min-height: auto; }
+      .booking-form-card { padding: 24px 18px; }
+    }
+    @media (max-width: 480px) {
+      .hero-btns { flex-direction: column; }
+      .hero-btns .btn-white, .hero-btns .btn-outline-white { width: 100%; justify-content: center; }
+      .teacher-picker { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Edu<span>Shkodër</span></a>
+      <ul class="nav-links">
+        <li><a href="#courses">Kurset</a></li>
+        <li><a href="#teachers">Mësuesit</a></li>
+        <li><a href="#booking">Rezervo</a></li>
+        <li><a href="#contact">Kontakt</a></li>
+      </ul>
+      <div class="nav-cta-desktop" style="display:flex;align-items:center;">
+        <a href="#booking" class="btn btn-primary" style="padding:10px 22px;font-size:0.86rem;">
+          <i class="fas fa-calendar-check"></i> Rezervo Tani
+        </a>
+      </div>
+      <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#courses">Kurset</a>
+      <a href="#teachers">Mësuesit</a>
+      <a href="#booking">Rezervo</a>
+      <a href="#contact">Kontakt</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-blobs">
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+    <div class="hero-blob hero-blob-3"></div>
+    <div class="hero-dots"></div>
+  </div>
+  <div class="container" style="width:100%;position:relative;z-index:2;">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fas fa-star"></i> Tutor 1 me 1 në Shkodër
+      </div>
+      <h1>Mëso Më Shumë,<br>Arri Më Lart</h1>
+      <p class="hero-sub">
+        Mësime private 1 me 1 me mësues të zgjedhur prej jush. Orare fleksibël, vëmendje e plotë, rezultate të dukshme.
+      </p>
+      <div class="hero-btns">
+        <a href="#courses" class="btn-white"><i class="fas fa-book-open"></i> Shiko Kurset</a>
+        <a href="#booking" class="btn-outline-white"><i class="fas fa-user-plus"></i> Rezervo Tani</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">350+</div>
+          <div class="hero-stat-label">Nxënës Aktivë</div>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">1 me 1</div>
+          <div class="hero-stat-label">Mësime Private</div>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">5+</div>
+          <div class="hero-stat-label">Mësues Ekspertë</div>
+        </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">5 ★</div>
+          <div class="hero-stat-label">Vlerësim Mesatar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-card-float">
+      <div class="hc-header">
+        <div class="hc-icon"><i class="fas fa-graduation-cap"></i></div>
+        <div>
+          <div class="hc-title">Kurset e Kësaj Jave</div>
+          <div class="hc-sub">Mësime private 1 me 1</div>
+        </div>
+      </div>
+      <div class="hc-courses">
+        <div class="hc-course"><i class="fas fa-square-root-alt"></i> Matematikë e Avancuar <span class="hc-badge">Hapur</span></div>
+        <div class="hc-course"><i class="fas fa-language"></i> Gjuha Angleze <span class="hc-badge">Hapur</span></div>
+        <div class="hc-course"><i class="fas fa-flask"></i> Kimi për Maturantë <span class="hc-badge">Hapur</span></div>
+        <div class="hc-course"><i class="fas fa-globe-europe"></i> Gjuha Gjermane A1 <span class="hc-badge">Hapur</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses">
+  <div class="container">
+    <div class="center-text reveal">
+      <span class="section-tag">Eksploroni</span>
+      <h2 class="section-title">Kurset Tona</h2>
+      <p class="section-subtitle">Të gjitha kurset zhvillohen si mësime private 1 me 1 — vëmendje e plotë vetëm për ju.</p>
+    </div>
+    <div class="courses-grid">
+      <div class="course-card reveal reveal-delay-1">
+        <div class="course-card-top">
+          <span class="course-category-label">Lëndë Shkollore</span>
+          <div class="course-icon-wrap"><i class="fas fa-square-root-alt"></i></div>
+          <h3>Matematikë e Avancuar</h3>
+        </div>
+        <div class="course-card-body">
+          <p class="course-desc">Kurs i plotë i matematikës për nxënës të klasave të larta. Mbulojmë algjebër, gjeometri, kalkulus dhe përgatitje intensive për maturë shtetërore.</p>
+          <div class="course-meta">
+            <span class="course-meta-item"><i class="fas fa-user"></i> 1 me 1</span>
+            <span class="course-meta-item"><i class="fas fa-clock"></i> 90 min / seancë</span>
+            <span class="course-meta-item"><i class="fas fa-calendar"></i> 3x / javë</span>
+          </div>
+          <a href="#booking" class="btn-course"><i class="fas fa-arrow-right"></i> Rezervo</a>
+        </div>
+      </div>
+      <div class="course-card reveal reveal-delay-2">
+        <div class="course-card-top">
+          <span class="course-category-label">Lëndë Shkollore</span>
+          <div class="course-icon-wrap" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);"><i class="fas fa-flask"></i></div>
+          <h3>Kimi për Maturantë</h3>
+        </div>
+        <div class="course-card-body">
+          <p class="course-desc">Kursi fokusohet në konceptet bazë dhe të avancuara të kimisë organike dhe inorganike. Ushtrime praktike dhe simulime provimesh.</p>
+          <div class="course-meta">
+            <span class="course-meta-item"><i class="fas fa-user"></i> 1 me 1</span>
+            <span class="course-meta-item"><i class="fas fa-clock"></i> 90 min / seancë</span>
+            <span class="course-meta-item"><i class="fas fa-calendar"></i> 2x / javë</span>
+          </div>
+          <a href="#booking" class="btn-course"><i class="fas fa-arrow-right"></i> Rezervo</a>
+        </div>
+      </div>
+      <div class="course-card reveal reveal-delay-3">
+        <div class="course-card-top">
+          <span class="course-category-label">Gjuhë të Huaja</span>
+          <div class="course-icon-wrap" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8);"><i class="fas fa-language"></i></div>
+          <h3>Gjuha Gjermane</h3>
+        </div>
+        <div class="course-card-body">
+          <p class="course-desc">Nga niveli fillestar A1 deri te niveli B2. Mëso të flasësh, shkruash dhe lexosh gjermanisht. Ideal për ata që synojnë studime jashtë vendit.</p>
+          <div class="course-meta">
+            <span class="course-meta-item"><i class="fas fa-user"></i> 1 me 1</span>
+            <span class="course-meta-item"><i class="fas fa-clock"></i> 60 min / seancë</span>
+            <span class="course-meta-item"><i class="fas fa-layer-group"></i> Niveli A1–B2</span>
+          </div>
+          <a href="#booking" class="btn-course"><i class="fas fa-arrow-right"></i> Rezervo</a>
+        </div>
+      </div>
+      <div class="course-card reveal reveal-delay-1">
+        <div class="course-card-top">
+          <span class="course-category-label">Gjuhë të Huaja</span>
+          <div class="course-icon-wrap" style="background:linear-gradient(135deg,#059669,#34d399);"><i class="fas fa-globe-americas"></i></div>
+          <h3>Gjuha Angleze</h3>
+        </div>
+        <div class="course-card-body">
+          <p class="course-desc">Mëso anglishten me metodën komunikative. Nga gjuha bazë deri te nivele të avancuara. Certifikim Cambridge i disponueshëm.</p>
+          <div class="course-meta">
+            <span class="course-meta-item"><i class="fas fa-user"></i> 1 me 1</span>
+            <span class="course-meta-item"><i class="fas fa-clock"></i> 60 min / seancë</span>
+            <span class="course-meta-item"><i class="fas fa-layer-group"></i> Të gjitha nivelet</span>
+          </div>
+          <a href="#booking" class="btn-course"><i class="fas fa-arrow-right"></i> Rezervo</a>
+        </div>
+      </div>
+      <div class="course-card reveal reveal-delay-2">
+        <div class="course-card-top">
+          <span class="course-category-label">Lëndë Shkollore</span>
+          <div class="course-icon-wrap" style="background:linear-gradient(135deg,#d97706,#fbbf24);"><i class="fas fa-bolt"></i></div>
+          <h3>Fizikë</h3>
+        </div>
+        <div class="course-card-body">
+          <p class="course-desc">Kurs mbështetës dhe i avancuar i fizikës. Fokus te mekanika, elektromagnetizmi dhe termodinamika. Përgatitje për olimpiadë dhe maturë.</p>
+          <div class="course-meta">
+            <span class="course-meta-item"><i class="fas fa-user"></i> 1 me 1</span>
+            <span class="course-meta-item"><i class="fas fa-clock"></i> 90 min / seancë</span>
+            <span class="course-meta-item"><i class="fas fa-calendar"></i> 2x / javë</span>
+          </div>
+          <a href="#booking" class="btn-course"><i class="fas fa-arrow-right"></i> Rezervo</a>
+        </div>
+      </div>
+      <div class="course-card reveal reveal-delay-3">
+        <div class="course-card-top">
+          <span class="course-category-label">Gjuhë të Huaja</span>
+          <div class="course-icon-wrap" style="background:linear-gradient(135deg,#dc2626,#f87171);"><i class="fas fa-pizza-slice"></i></div>
+          <h3>Gjuha Italiane</h3>
+        </div>
+        <div class="course-card-body">
+          <p class="course-desc">Mëso italisht me mësues me përvojë. Nivele nga A1 deri te C1 me fokus te konversacioni dhe gramatika praktike.</p>
+          <div class="course-meta">
+            <span class="course-meta-item"><i class="fas fa-user"></i> 1 me 1</span>
+            <span class="course-meta-item"><i class="fas fa-clock"></i> 60 min / seancë</span>
+            <span class="course-meta-item"><i class="fas fa-layer-group"></i> Niveli A1–C1</span>
+          </div>
+          <a href="#booking" class="btn-course"><i class="fas fa-arrow-right"></i> Rezervo</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEACHERS -->
+<section id="teachers">
+  <div class="container">
+    <div class="center-text reveal">
+      <span class="section-tag">Ekipi Ynë</span>
+      <h2 class="section-title">Mësuesit Tanë</h2>
+      <p class="section-subtitle">Zgjidhni mësuesin/en tuaj dhe kontaktojini drejtpërdrejt për të rezervuar orarin.</p>
+    </div>
+    <div class="teachers-grid">
+
+      <div class="teacher-card reveal reveal-delay-1">
+        <div class="teacher-avatar">A</div>
+        <div class="teacher-name">Arta Kola</div>
+        <div class="teacher-subject">Matematikë</div>
+        <div class="teacher-phone"><i class="fas fa-phone" style="color:var(--orange);margin-right:5px;font-size:0.75rem;"></i> 068 234 5671</div>
+        <div class="teacher-actions">
+          <a href="https://wa.me/35568234567" target="_blank" class="teacher-btn teacher-btn-wa">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+          </a>
+          <a href="https://maps.google.com/?q=Rruga+Skenderbeu+12+Shkoder+Albania" target="_blank" class="teacher-btn teacher-btn-map">
+            <i class="fas fa-map-marker-alt"></i> Vendndodhja
+          </a>
+        </div>
+      </div>
+
+      <div class="teacher-card reveal reveal-delay-2">
+        <div class="teacher-avatar">B</div>
+        <div class="teacher-name">Besmir Deda</div>
+        <div class="teacher-subject">Kimi & Fizikë</div>
+        <div class="teacher-phone"><i class="fas fa-phone" style="color:var(--orange);margin-right:5px;font-size:0.75rem;"></i> 069 345 6782</div>
+        <div class="teacher-actions">
+          <a href="https://wa.me/35569345678" target="_blank" class="teacher-btn teacher-btn-wa">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+          </a>
+          <a href="https://maps.google.com/?q=Rruga+Marin+Barleti+5+Shkoder+Albania" target="_blank" class="teacher-btn teacher-btn-map">
+            <i class="fas fa-map-marker-alt"></i> Vendndodhja
+          </a>
+        </div>
+      </div>
+
+      <div class="teacher-card reveal reveal-delay-3">
+        <div class="teacher-avatar">K</div>
+        <div class="teacher-name">Klara Mani</div>
+        <div class="teacher-subject">Gjuha Angleze</div>
+        <div class="teacher-phone"><i class="fas fa-phone" style="color:var(--orange);margin-right:5px;font-size:0.75rem;"></i> 067 456 7893</div>
+        <div class="teacher-actions">
+          <a href="https://wa.me/35567456789" target="_blank" class="teacher-btn teacher-btn-wa">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+          </a>
+          <a href="https://maps.google.com/?q=Rruga+28+Nentori+8+Shkoder+Albania" target="_blank" class="teacher-btn teacher-btn-map">
+            <i class="fas fa-map-marker-alt"></i> Vendndodhja
+          </a>
+        </div>
+      </div>
+
+      <div class="teacher-card reveal reveal-delay-1">
+        <div class="teacher-avatar" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8);">E</div>
+        <div class="teacher-name">Erjon Vata</div>
+        <div class="teacher-subject">Gjuha Gjermane</div>
+        <div class="teacher-phone"><i class="fas fa-phone" style="color:var(--orange);margin-right:5px;font-size:0.75rem;"></i> 069 614 7703</div>
+        <div class="teacher-actions">
+          <a href="https://wa.me/35592575638" target="_blank" class="teacher-btn teacher-btn-wa">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+          </a>
+          <a href="https://maps.google.com/?q=Rruga+Kole+Idromeno+17+Shkoder+Albania" target="_blank" class="teacher-btn teacher-btn-map">
+            <i class="fas fa-map-marker-alt"></i> Vendndodhja
+          </a>
+        </div>
+      </div>
+
+      <div class="teacher-card reveal reveal-delay-2">
+        <div class="teacher-avatar" style="background:linear-gradient(135deg,#dc2626,#f87171);">F</div>
+        <div class="teacher-name">Flora Gashi</div>
+        <div class="teacher-subject">Gjuha Italiane</div>
+        <div class="teacher-phone"><i class="fas fa-phone" style="color:var(--orange);margin-right:5px;font-size:0.75rem;"></i> 068 567 8904</div>
+        <div class="teacher-actions">
+          <a href="https://wa.me/35568567890" target="_blank" class="teacher-btn teacher-btn-wa">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+          </a>
+          <a href="https://maps.google.com/?q=Bulevardi+Zogu+I+22+Shkoder+Albania" target="_blank" class="teacher-btn teacher-btn-map">
+            <i class="fas fa-map-marker-alt"></i> Vendndodhja
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="container">
+    <div class="center-text reveal">
+      <span class="section-tag">I Thjeshtë</span>
+      <h2 class="section-title">Si Funksionon?</h2>
+      <p class="section-subtitle">Tre hapa të shkurtër dhe nxënësi juaj fillon menjëherë.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-num">01</div>
+        <div class="step-icon"><i class="fas fa-search"></i></div>
+        <h3>Zgjedh Kursin</h3>
+        <p>Shfletoni kurset tona dhe zgjidhni lëndën që nevojitet.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-num">02</div>
+        <div class="step-icon"><i class="fas fa-user-check"></i></div>
+        <h3>Zgjedh Mësuesin</h3>
+        <p>Zgjidhni mësuesin/en tuaj dhe plotësoni orarin e preferuar në formular.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-3">
+        <div class="step-num">03</div>
+        <div class="step-icon"><i class="fab fa-whatsapp"></i></div>
+        <h3>Konfirmo me WhatsApp</h3>
+        <p>Kërkesa juaj dërgohet direkt tek mësuesi/ja nëpërmjet WhatsApp. Konfirmoni dhe filloni!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="container">
+    <div class="center-text reveal" style="margin-bottom:48px;">
+      <span class="section-tag">Rezervim i Lehtë</span>
+      <h2 class="section-title">Rezervo një Orar</h2>
+      <p class="section-subtitle">Plotësoni të dhënat, zgjidhni mësuesin dhe kërkesa dërgohet direkt në WhatsApp.</p>
+    </div>
+    <div class="booking-form-card reveal">
+      <h3 style="margin-bottom:24px;"><i class="fas fa-calendar-plus" style="color:var(--orange);margin-right:8px;"></i>Forma e Rezervimit</h3>
+      <div class="form-grid" id="bookingForm">
+
+        <div class="form-group">
+          <label for="studentName">Emri i Nxënësit *</label>
+          <input type="text" id="studentName" placeholder="p.sh. Ardi Marku" />
+        </div>
+        <div class="form-group">
+          <label for="studentPhone">Nr. Telefonit (opsional)</label>
+          <input type="tel" id="studentPhone" placeholder="+355 6X XXX XXXX" />
+        </div>
+
+        <div class="form-group full">
+          <label for="preferredCourse">Kursi i Preferuar *</label>
+          <select id="preferredCourse">
+            <option value="" disabled selected>— Zgjidhni kursin —</option>
+            <option value="Matematikë e Avancuar" data-teacher="Arta Kola">Matematikë e Avancuar</option>
+            <option value="Kimi për Maturantë" data-teacher="Besmir Deda">Kimi për Maturantë</option>
+            <option value="Fizikë" data-teacher="Besmir Deda">Fizikë</option>
+            <option value="Gjuha Gjermane" data-teacher="Erjon Vata">Gjuha Gjermane</option>
+            <option value="Gjuha Angleze" data-teacher="Klara Mani">Gjuha Angleze</option>
+            <option value="Gjuha Italiane" data-teacher="Flora Gashi">Gjuha Italiane</option>
+          </select>
+        </div>
+
+        <div class="form-group full">
+          <label>Pyetje shtesë: Çfarë vështirësish ke? *</label>
+          <input type="text" id="difficulty" placeholder="p.sh. Kemi problem me ekuacionet dhe gjeometrinë" />
+        </div>
+
+        <div class="form-group full">
+          <label>Pyetje shtesë: Cili është qëllimi kryesor? *</label>
+          <select id="goal">
+            <option value="" disabled selected>— Zgjidhni —</option>
+            <option>Përgatitje për maturë shtetërore</option>
+            <option>Përmirësim i notave</option>
+            <option>Olimpiadë / konkurs</option>
+            <option>Mësim i gjuhës nga zero</option>
+            <option>Tjetër</option>
+          </select>
+        </div>
+
+        <div class="form-group full">
+          <label>Ditët e Preferuara *</label>
+          <div class="checkbox-group" id="daysGroup">
+            <label class="checkbox-label"><input type="checkbox" name="day" value="Hënë" /> Hënë</label>
+            <label class="checkbox-label"><input type="checkbox" name="day" value="Martë" /> Martë</label>
+            <label class="checkbox-label"><input type="checkbox" name="day" value="Mërkurë" /> Mërkurë</label>
+            <label class="checkbox-label"><input type="checkbox" name="day" value="Enjte" /> Enjte</label>
+            <label class="checkbox-label"><input type="checkbox" name="day" value="Premte" /> Premte</label>
+          </div>
+        </div>
+
+        <div class="form-group full">
+          <label for="schedule">Orari i Preferuar *</label>
+          <select id="schedule">
+            <option value="" disabled selected>— Zgjidhni —</option>
+            <option>Paradite (08:00 – 13:00)</option>
+            <option>Pasdite (14:00 – 19:00)</option>
+            <option>Mbrëmje (19:00 – 21:00)</option>
+          </select>
+        </div>
+
+        <div class="form-group full">
+          <label style="margin-bottom:10px;">Zgjidhni Mësuesin/en *</label>
+          <div class="teacher-picker" id="teacherPicker">
+            <div class="teacher-pick-card" data-teacher="Arta Kola" data-phone="35568234567" data-subject="Matematikë">
+              <div class="tp-check"><i class="fas fa-check"></i></div>
+              <div class="tp-avatar">A</div>
+              <div class="tp-name">Arta Kola</div>
+              <div class="tp-subj">Matematikë</div>
+            </div>
+            <div class="teacher-pick-card" data-teacher="Besmir Deda" data-phone="35569345678" data-subject="Kimi & Fizikë">
+              <div class="tp-check"><i class="fas fa-check"></i></div>
+              <div class="tp-avatar" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);">B</div>
+              <div class="tp-name">Besmir Deda</div>
+              <div class="tp-subj">Kimi & Fizikë</div>
+            </div>
+            <div class="teacher-pick-card" data-teacher="Klara Mani" data-phone="35567456789" data-subject="Angleze">
+              <div class="tp-check"><i class="fas fa-check"></i></div>
+              <div class="tp-avatar" style="background:linear-gradient(135deg,#059669,#34d399);">K</div>
+              <div class="tp-name">Klara Mani</div>
+              <div class="tp-subj">Gjuha Angleze</div>
+            </div>
+            <div class="teacher-pick-card" data-teacher="Erjon Vata" data-phone="35592575638" data-subject="Gjermane">
+              <div class="tp-check"><i class="fas fa-check"></i></div>
+              <div class="tp-avatar" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8);">E</div>
+              <div class="tp-name">Erjon Vata</div>
+              <div class="tp-subj">Gjuha Gjermane</div>
+            </div>
+            <div class="teacher-pick-card" data-teacher="Flora Gashi" data-phone="35568567890" data-subject="Italiane">
+              <div class="tp-check"><i class="fas fa-check"></i></div>
+              <div class="tp-avatar" style="background:linear-gradient(135deg,#dc2626,#f87171);">F</div>
+              <div class="tp-name">Flora Gashi</div>
+              <div class="tp-subj">Gjuha Italiane</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="full">
+          <button class="btn-submit-wa" id="sendWhatsApp" disabled onclick="sendToWhatsApp()">
+            <i class="fab fa-whatsapp" style="font-size:1.3rem;"></i> Dërgo Kërkesën në WhatsApp
+          </button>
+          <p class="form-note"><i class="fas fa-lock" style="margin-right:4px;"></i> Kërkesa dërgohet direkt tek mësuesi/ja që zgjidhni.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXISTING TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="center-text reveal">
+      <span class="section-tag">Klientët Tanë</span>
+      <h2 class="section-title">Çfarë Thonë Prindërit</h2>
+      <p class="section-subtitle">Suksesi i fëmijëve tanë është kënaqësia jonë më e madhe.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-quote">"</div>
+        <p class="testi-text">Djali im ka ndryshuar krejtësisht qëndrimin ndaj matematikës. Nga nota 5 ka arritur në 9 brenda tre muajsh. Mësuesi është i jashtëzakonshëm dhe shumë i durueshëm.</p>
+        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <div class="testi-author">
+          <div class="testi-avatar">E</div>
+          <div>
+            <div class="testi-name">Elvira Haxhiu</div>
+            <div class="testi-role">Nënë e Ardianit, 16 vjeç</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-quote">"</div>
+        <p class="testi-text">Vajza ime filloi anglishten pa ditur asnjë fjalë. Tani pas 6 muajsh flet rrjedhshëm dhe kaloi provimin Cambridge. Shumë i kënaqur me mësimdhënien.</p>
+        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+        <div class="testi-author">
+          <div class="testi-avatar">B</div>
+          <div>
+            <div class="testi-name">Besnik Leka</div>
+            <div class="testi-role">Baba i Miriamit, 13 vjeç</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-3">
+        <div class="testi-quote">"</div>
+        <p class="testi-text">Kursi i kimisë e ndihmoi shumë fëmijën tim të kalojë maturën me notë të lartë. Atmosfera gjatë mësimit është shumë motivuese. Rekomandoj fuqimisht!</p>
+        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+        <div class="testi-author">
+          <div class="testi-avatar">M</div>
+          <div>
+            <div class="testi-name">Mirela Gjokaj</div>
+            <div class="testi-role">Nënë e Klaudios, 18 vjeç</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="center-text reveal">
+      <span class="section-tag">Pyetje?</span>
+      <h2 class="section-title">Na Kontaktoni</h2>
+      <p class="section-subtitle">Keni pyetje të tjera? Na shkruani dhe do ju përgjigjemi sa më shpejt.</p>
+    </div>
+    <div class="contact-form-card reveal">
+      <h3><i class="fas fa-paper-plane" style="color:var(--orange);margin-right:8px;"></i>Dërgoni një Mesazh</h3>
+      <form id="contactForm" class="contact-form-grid">
+        <div class="form-group">
+          <label for="cName">Emri Juaj *</label>
+          <input type="text" id="cName" placeholder="p.sh. Andi Marku" required />
+        </div>
+        <div class="form-group">
+          <label for="cEmail">Adresa Email *</label>
+          <input type="email" id="cEmail" placeholder="ju@shembull.com" required />
+        </div>
+        <div class="form-group">
+          <label for="cMsg">Mesazhi Juaj *</label>
+          <textarea id="cMsg" rows="5" placeholder="Shkruani mesazhin tuaj këtu..." required></textarea>
+        </div>
+        <div id="contactSuccess" class="success-msg">
+          <i class="fas fa-check-circle"></i>
+          Mesazhi juaj u dërgua me sukses! Do ju kthejmë përgjigje sa më shpejt. Faleminderit!
+        </div>
+        <button type="submit" class="btn-submit">
+          <i class="fas fa-paper-plane"></i> Dërgo Mesazhin
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">Edu<span>Shkodër</span></div>
+        <p class="footer-desc">Mësime private 1 me 1 në Shkodër. Mësues të zgjedhur prej jush, orare fleksibël, rezultate reale.</p>
+        <div class="footer-socials">
+          <a href="#" class="footer-social" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="footer-social" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="footer-social" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Lidhje të Shpejta</h4>
+        <ul>
+          <li><a href="#courses">Kurset Tona</a></li>
+          <li><a href="#teachers">Mësuesit</a></li>
+          <li><a href="#how">Si Funksionon</a></li>
+          <li><a href="#booking">Rezervo Orar</a></li>
+          <li><a href="#contact">Kontakt</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Kurset</h4>
+        <ul>
+          <li><a href="#">Matematikë e Avancuar</a></li>
+          <li><a href="#">Kimi për Maturantë</a></li>
+          <li><a href="#">Gjuha Angleze</a></li>
+          <li><a href="#">Gjuha Gjermane</a></li>
+          <li><a href="#">Fizikë</a></li>
+          <li><a href="#">Gjuha Italiane</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 <span>EduShkodër</span>. Të gjitha të drejtat e rezervuara.</p>
+      <p class="footer-copy" style="color:rgba(255,255,255,0.2);">Bërë me <span style="color:var(--orange);">♥</span> në Shkodër</p>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/35592575638" class="whatsapp-float" target="_blank" title="Na kontaktoni në WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+<div class="whatsapp-tooltip">Na kontaktoni!</div>
+
+<script>
+  /* ---------- DATA ---------- */
+  const TEACHERS = [
+    { name: "Arta Kola",    phone: "35568234567",  subject: "Matematikë",    maps: "https://maps.google.com/?q=Rruga+Skenderbeu+12+Shkoder+Albania" },
+    { name: "Besmir Deda",  phone: "35569345678",  subject: "Kimi & Fizikë", maps: "https://maps.google.com/?q=Rruga+Marin+Barleti+5+Shkoder+Albania" },
+    { name: "Klara Mani",   phone: "35567456789",  subject: "Gjuha Angleze", maps: "https://maps.google.com/?q=Rruga+28+Nentori+8+Shkoder+Albania" },
+    { name: "Erjon Vata",   phone: "35592575638",  subject: "Gjuha Gjermane",maps: "https://maps.google.com/?q=Rruga+Kole+Idromeno+17+Shkoder+Albania" },
+    { name: "Flora Gashi",  phone: "35568567890",  subject: "Gjuha Italiane",maps: "https://maps.google.com/?q=Bulevardi+Zogu+I+22+Shkoder+Albania" },
+  ];
+
+  /* ---------- NAVBAR ---------- */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 30);
+  });
+
+  /* ---------- HAMBURGER ---------- */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    hamburger.innerHTML = mobileMenu.classList.contains('open')
+      ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+  });
+  mobileMenu.querySelectorAll('a').forEach(l => l.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+  }));
+
+  /* ---------- ACTIVE NAV ---------- */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 140) current = s.id; });
+    navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+  });
+
+  /* ---------- SCROLL REVEAL ---------- */
+  const revealEls = document.querySelectorAll('.reveal');
+  new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 }).observe
+  // use forEach
+  ;
+  const ro = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  revealEls.forEach(el => ro.observe(el));
+
+  /* ---------- CHECKBOX STYLING ---------- */
+  document.querySelectorAll('.checkbox-label input').forEach(cb => {
+    cb.addEventListener('change', function() {
+      this.closest('.checkbox-label').classList.toggle('checked', this.checked);
+    });
+  });
+
+  /* ---------- TEACHER PICKER ---------- */
+  let selectedTeacher = null;
+  document.querySelectorAll('.teacher-pick-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.teacher-pick-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selectedTeacher = {
+        name: card.dataset.teacher,
+        phone: card.dataset.phone
+      };
+      validateForm();
+    });
+  });
+
+  /* ---------- VALIDATE FORM ---------- */
+  function validateForm() {
+    const name = document.getElementById('studentName').value.trim();
+    const course = document.getElementById('preferredCourse').value;
+    const schedule = document.getElementById('schedule').value;
+    const days = [...document.querySelectorAll('input[name="day"]:checked')].map(c => c.value);
+    const btn = document.getElementById('sendWhatsApp');
+    btn.disabled = !(name && course && schedule && days.length > 0 && selectedTeacher);
+  }
+
+  ['studentName','preferredCourse','schedule','difficulty','goal'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('change', validateForm);
+    if (el) el.addEventListener('input', validateForm);
+  });
+  document.querySelectorAll('input[name="day"]').forEach(cb => cb.addEventListener('change', validateForm));
+
+  /* ---------- SEND WHATSAPP ---------- */
+  function sendToWhatsApp() {
+    const name     = document.getElementById('studentName').value.trim();
+    const phone    = document.getElementById('studentPhone').value.trim();
+    const course   = document.getElementById('preferredCourse').value;
+    const diff     = document.getElementById('difficulty').value.trim();
+    const goal     = document.getElementById('goal').value;
+    const schedule = document.getElementById('schedule').value;
+    const days     = [...document.querySelectorAll('input[name="day"]:checked')].map(c => c.value).join(', ');
+
+    if (!selectedTeacher) { alert('Ju lutem zgjidhni një mësues/e!'); return; }
+
+    const msg = encodeURIComponent(
+`Përshëndetje ${selectedTeacher.name}! 👋
+
+📚 Kërkesë e re për mësim privat:
+
+👤 Emri i nxënësit: ${name}${phone ? '\n📞 Telefon: ' + phone : ''}
+📖 Kursi: ${course}
+❓ Vështirësitë: ${diff || '—'}
+🎯 Qëllimi: ${goal || '—'}
+📅 Ditët e preferuara: ${days}
+⏰ Orari: ${schedule}
+
+Ju kontaktoj për të konfirmuar. Faleminderit!`
+    );
+
+    window.open(`https://wa.me/${selectedTeacher.phone}?text=${msg}`, '_blank');
+  }
+
+  /* ---------- CONTACT FORM ---------- */
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('contactSuccess').style.display = 'block';
+    this.querySelectorAll('input, textarea').forEach(el => el.disabled = true);
+    this.querySelector('.btn-submit').style.display = 'none';
+  });
+
+</script>
+</body>
+</html>
