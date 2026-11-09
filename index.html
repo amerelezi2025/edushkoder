@@ -21,8 +21,8 @@
       --shadow-sm: 0 2px 8px rgba(255,107,53,0.10);
       --shadow-md: 0 6px 24px rgba(255,107,53,0.13);
       --shadow-lg: 0 16px 48px rgba(255,107,53,0.16);
-      --radius: 14px;
-      --radius-lg: 22px;
+      --radius: 8px;
+      --radius-lg: 12px;
       --transition: all 0.28s cubic-bezier(.4,0,.2,1);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -61,7 +61,7 @@
     .mobile-menu.open { display: flex; }
 
     /* HERO */
-    #hero { min-height: 92vh; background: linear-gradient(135deg, #FF6B35 0%, #ff8c5a 35%, #FFD166 75%, #ffe8a0 100%); display: flex; align-items: center; position: relative; overflow: hidden; padding: 80px 0 60px; }
+    #hero { min-height: 78vh; background: #b94724; display: flex; align-items: center; position: relative; overflow: hidden; padding: 80px 0 60px; }
     .hero-blobs { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
     .hero-blob { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.12); }
     .hero-blob-1 { width: 420px; height: 420px; top: -120px; right: -80px; }
@@ -69,7 +69,7 @@
     .hero-blob-3 { width: 160px; height: 160px; top: 30%; left: 40%; background: rgba(255,255,255,0.07); }
     .hero-dots { position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(circle, rgba(255,255,255,0.22) 1.5px, transparent 1.5px); background-size: 38px 38px; }
     .hero-content { position: relative; z-index: 2; max-width: 640px; }
-    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.25); backdrop-filter: blur(8px); border: 1.5px solid rgba(255,255,255,0.45); border-radius: 100px; padding: 7px 18px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.82rem; color: var(--white); margin-bottom: 26px; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.4); border-radius: 100px; padding: 7px 18px; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.82rem; color: var(--white); margin-bottom: 26px; }
     #hero h1 { color: var(--white); margin-bottom: 18px; text-shadow: 0 2px 12px rgba(45,45,45,0.12); }
     .hero-sub { color: rgba(255,255,255,0.92); font-size: 1.15rem; max-width: 520px; margin-bottom: 36px; font-weight: 500; }
     .hero-btns { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 48px; }
@@ -83,8 +83,7 @@
     .hero-stat-label { font-size: 0.8rem; color: rgba(255,255,255,0.82); font-weight: 600; }
     .hero-stat-divider { width: 1.5px; height: 40px; background: rgba(255,255,255,0.3); align-self: center; }
     .hero-visual { position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 40%; max-width: 420px; padding-right: 32px; display: flex; align-items: center; justify-content: center; }
-    .hero-card-float { background: rgba(255,255,255,0.97); border-radius: var(--radius-lg); padding: 30px 26px; box-shadow: 0 24px 64px rgba(45,45,45,0.18); width: 100%; animation: floatUp 3.5s ease-in-out infinite alternate; }
-    @keyframes floatUp { from { transform: translateY(0px); } to { transform: translateY(-14px); } }
+    .hero-card-float { background: rgba(255,255,255,0.97); border-radius: var(--radius-lg); padding: 30px 26px; box-shadow: 0 24px 64px rgba(45,45,45,0.18); width: 100%;  }
     .hc-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
     .hc-icon { width: 50px; height: 50px; border-radius: 14px; background: linear-gradient(135deg, var(--orange), var(--yellow)); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: var(--white); flex-shrink: 0; }
     .hc-title { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--dark); }
@@ -221,11 +220,11 @@
     .whatsapp-float:hover + .whatsapp-tooltip { opacity: 1; }
 
     /* SCROLL REVEAL */
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .reveal { opacity: 1; transform: none; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.22s; }
-    .reveal-delay-3 { transition-delay: 0.34s; }
+    .reveal-delay-1 { transition-delay: 0s; }
+    .reveal-delay-2 { transition-delay: 0s; }
+    .reveal-delay-3 { transition-delay: 0s; }
 
     /* RESPONSIVE */
     @media (max-width: 1024px) {
@@ -820,7 +819,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p class="footer-copy">© 2025 <span>EduShkodër</span>. Të gjitha të drejtat e rezervuara.</p>
+      <p class="footer-copy">© 2026 <span>EduShkodër</span>. Të gjitha të drejtat e rezervuara.</p>
       <p class="footer-copy" style="color:rgba(255,255,255,0.2);">Bërë me <span style="color:var(--orange);">♥</span> në Shkodër</p>
     </div>
   </div>
@@ -869,18 +868,6 @@
     sections.forEach(s => { if (window.scrollY >= s.offsetTop - 140) current = s.id; });
     navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
   });
-
-  /* ---------- SCROLL REVEAL ---------- */
-  const revealEls = document.querySelectorAll('.reveal');
-  new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-  }, { threshold: 0.1 }).observe
-  // use forEach
-  ;
-  const ro = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-  }, { threshold: 0.1 });
-  revealEls.forEach(el => ro.observe(el));
 
   /* ---------- CHECKBOX STYLING ---------- */
   document.querySelectorAll('.checkbox-label input').forEach(cb => {
@@ -933,16 +920,15 @@
     if (!selectedTeacher) { alert('Ju lutem zgjidhni një mësues/e!'); return; }
 
     const msg = encodeURIComponent(
-`Përshëndetje ${selectedTeacher.name}! 👋
+`Përshëndetje ${selectedTeacher.name},
 
-📚 Kërkesë e re për mësim privat:
-
-👤 Emri i nxënësit: ${name}${phone ? '\n📞 Telefon: ' + phone : ''}
-📖 Kursi: ${course}
-❓ Vështirësitë: ${diff || '—'}
-🎯 Qëllimi: ${goal || '—'}
-📅 Ditët e preferuara: ${days}
-⏰ Orari: ${schedule}
+Kërkesë e re për mësim privat
+Emri i nxënësit: ${name}${phone ? '\\nTelefon: ' + phone : ''}
+Kursi: ${course}
+Vështirësitë: ${diff || '—'}
+Qëllimi: ${goal || '—'}
+Ditët e preferuara: ${days}
+Orari: ${schedule}
 
 Ju kontaktoj për të konfirmuar. Faleminderit!`
     );
